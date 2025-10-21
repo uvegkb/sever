@@ -1,13 +1,76 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta charset="UTF-8">
-    <title>سيرفر عبدالله السحابي</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>بطاقات Like سريعة</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .card {
+            display: inline-block;
+            width: 200px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .like-btn {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .like-count {
+            display: block;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body style="background:#111; color:#0f0; font-family:monospace; text-align:center;">
-    <h1>🔥 سيرفري السحابي شغال 24/7 🔥</h1>
-    <p>بايثون + Flask + Render</p>
-    <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" width="200">
+
+<body>
+
+    <h1>بطاقات Like سريعة 🔥</h1>
+
+    <div class="card">
+        <h3>البطاقة 1</h3>
+        <img src="https://via.placeholder.com/200x120" alt="Card 1">
+        <button class="like-btn" onclick="increaseLike(1)">Like 👍</button>
+        <span class="like-count" id="like1">0 Likes</span>
+    </div>
+
+    <div class="card">
+        <h3>البطاقة 2</h3>
+        <img src="https://via.placeholder.com/200x120" alt="Card 2">
+        <button class="like-btn" onclick="increaseLike(2)">Like 👍</button>
+        <span class="like-count" id="like2">0 Likes</span>
+    </div>
+
+    <script>
+        let likes = [0, 0];
+        function increaseLike(cardNumber) {
+            likes[cardNumber - 1]++;
+            document.getElementById('like' + cardNumber).innerText = likes[cardNumber - 1] + " Likes";
+        }
+    </script>
+
 </body>
+
 </html>
