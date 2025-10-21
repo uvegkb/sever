@@ -3,77 +3,115 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>بطاقات Like مع حفظ</title>
+    <title>بطاقات Like محفوظة 🔥</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
         body {
-            font-family: Arial;
-            background: #f4f4f4;
-            text-align: center;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(120deg, #f6d365, #fda085);
+            margin: 0;
             padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
         }
 
         .card {
             display: inline-block;
-            width: 200px;
+            width: 220px;
             margin: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 15px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
         }
 
         .card img {
             width: 100%;
             border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: #444;
         }
 
         .like-btn {
-            background: #ff4081;
+            background-color: #ff4081;
             color: white;
             border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 10px 20px;
+            border-radius: 8px;
             cursor: pointer;
-            margin-top: 10px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .like-btn:hover {
+            background-color: #e73370;
         }
 
         .like-count {
             display: block;
-            margin-top: 5px;
+            margin-top: 10px;
             font-weight: bold;
+            color: #555;
         }
     </style>
 </head>
 
 <body>
-    <h1>بطاقات Like محفوظة 🔥</h1>
+
+    <h1>بطاقات Like الحديثة 🔥</h1>
 
     <div class="card" data-id="1">
         <h3>البطاقة 1</h3>
-        <img src="https://via.placeholder.com/200x120" alt="Card 1">
+        <img src="https://via.placeholder.com/220x140" alt="Card 1">
         <button class="like-btn">Like 👍</button>
         <span class="like-count">{{ likes['1'] }} Likes</span>
     </div>
 
     <div class="card" data-id="2">
         <h3>البطاقة 2</h3>
-        <img src="https://via.placeholder.com/200x120" alt="Card 2">
+        <img src="https://via.placeholder.com/220x140" alt="Card 2">
         <button class="like-btn">Like 👍</button>
         <span class="like-count">{{ likes['2'] }} Likes</span>
     </div>
 
     <script>
+        function fetchLikes() {
+            fetch('/like/0')
+                .then(res => res.json())
+                .then(data => {
+                    document.querySelector('[data-id="1"] .like-count').innerText = data["1"] + " Likes";
+                    document.querySelector('[data-id="2"] .like-count').innerText = data["2"] + " Likes";
+                });
+        }
+
         document.querySelectorAll('.like-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 let card = btn.parentElement;
                 let id = card.getAttribute('data-id');
                 fetch(`/like/${id}`, { method: 'POST' })
-                    .then(response => response.json())
+                    .then(res => res.json())
                     .then(data => {
                         card.querySelector('.like-count').innerText = data[id] + " Likes";
                     });
             });
         });
+
+        window.onload = fetchLikes;
     </script>
 
 </body>

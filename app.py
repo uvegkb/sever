@@ -29,5 +29,10 @@ def like(card_id):
     add_like(card_id)
     return jsonify(get_likes())
 
+@app.route('/like/0')
+def get_all_likes():
+    return jsonify(get_likes())
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8080)
