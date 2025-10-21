@@ -3,11 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>بطاقات Like سريعة</title>
+    <title>بطاقات Like مع حفظ</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: Arial;
+            background: #f4f4f4;
             text-align: center;
             padding: 30px;
         }
@@ -16,7 +16,7 @@
             display: inline-block;
             width: 200px;
             margin: 20px;
-            background-color: white;
+            background: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 15px;
@@ -28,7 +28,7 @@
         }
 
         .like-btn {
-            background-color: #ff4081;
+            background: #ff4081;
             color: white;
             border: none;
             padding: 8px 15px;
@@ -46,29 +46,34 @@
 </head>
 
 <body>
+    <h1>بطاقات Like محفوظة 🔥</h1>
 
-    <h1>بطاقات Like سريعة 🔥</h1>
-
-    <div class="card">
+    <div class="card" data-id="1">
         <h3>البطاقة 1</h3>
         <img src="https://via.placeholder.com/200x120" alt="Card 1">
-        <button class="like-btn" onclick="increaseLike(1)">Like 👍</button>
-        <span class="like-count" id="like1">0 Likes</span>
+        <button class="like-btn">Like 👍</button>
+        <span class="like-count">{{ likes['1'] }} Likes</span>
     </div>
 
-    <div class="card">
+    <div class="card" data-id="2">
         <h3>البطاقة 2</h3>
         <img src="https://via.placeholder.com/200x120" alt="Card 2">
-        <button class="like-btn" onclick="increaseLike(2)">Like 👍</button>
-        <span class="like-count" id="like2">0 Likes</span>
+        <button class="like-btn">Like 👍</button>
+        <span class="like-count">{{ likes['2'] }} Likes</span>
     </div>
 
     <script>
-        let likes = [0, 0];
-        function increaseLike(cardNumber) {
-            likes[cardNumber - 1]++;
-            document.getElementById('like' + cardNumber).innerText = likes[cardNumber - 1] + " Likes";
-        }
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                let card = btn.parentElement;
+                let id = card.getAttribute('data-id');
+                fetch(`/like/${id}`, { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        card.querySelector('.like-count').innerText = data[id] + " Likes";
+                    });
+            });
+        });
     </script>
 
 </body>
